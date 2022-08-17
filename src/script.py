@@ -16,7 +16,7 @@ driver.get('https://us--mynews--es.us.debiblio.com/hu/')
 driver.find_element(By.ID, 'edit-name').send_keys('')
 driver.find_element(By.ID, 'edit-pass').send_keys('' + Keys.ENTER)
 time.sleep(10)
-dictionary = {'ID': [], 'Termino': [], 'Fecha': [], 'Relevancia': [], 'Medio': [], 'Titular': [], 'Enlace local': [],
+dictionary = {'ID': [], 'Termino': [], 'Fecha': [], 'Medio': [], 'Titular': [], 'Enlace local': [],
               'Enlace intenet': []}
 for row in csv.iterrows():
     driver.get('https://us--mynews--es.us.debiblio.com/hu/busqueda/profesional/')
@@ -43,7 +43,7 @@ for row in csv.iterrows():
 
     driver.find_element(By.ID, 'selectorMitjans').click()
     driver.find_element(By.ID, 'selector_check_all').click()
-    driver.find_element(By.ID, 'selector_ref_379').click()
+    driver.find_element(By.ID, 'selector_ref_379').click()  # Marca
     driver.find_element(By.ID, 'selector_ref_170').click()
     driver.find_element(By.ID, 'selector_ref_163').click()
     driver.find_element(By.ID, 'enviarPublicacions').click()
@@ -70,11 +70,21 @@ for row in csv.iterrows():
     if not os.path.exists(path):
         os.mkdir(path)
     for noticie in response['noticies']:
+        year = noticie['date'][:-4]
+        if not os.path.exists(f'{path}/{year}'):
+            os.mkdir(f'{path}/{year}')
         medio = noticie['Newspaper']
-        if not os.path.exists(f'{path}/{medio}'):
-            os.mkdir(f'{path}/{medio}')
+        if not os.path.exists(f'{path}/{year}/{medio}'):
+            os.mkdir(f'{path}/{year}{medio}')
         id_document = noticie['IdDocument']
-        response_pdf = requests.get(url=url_format.format(id_document), headers=headers)
+        try:
+            response_pdf = None
+            i = 0
+            while not response_pdf:
+                print(f'{i}: {id_document}')
+                response_pdf = requests.get(url=url_format.format(id_document), headers=headers)
+        except Exception as e:
+            print(e)
         pdf = open(f'{path}/{medio}/{id_document}.pdf', 'wb')
         pdf.write(response_pdf.content)
         pdf.close()
@@ -86,9 +96,8 @@ for row in csv.iterrows():
         dictionary['Medio'].append(medio)
         url_noticie = noticie['Page'] if 'http' in noticie['Page'] else None
         dictionary['Enlace intenet'].append(url_noticie)
-        dictionary['Relevancia'].append(noticie['Doc_weight'])
     noticias = pandas.DataFrame(data=dictionary)
-    noticias.to_csv('tabla_access.csv', index=True, sep=';')
+    noticias.to_csv('tabla_access.csv', index=False, sep=';')
 
 noticias = pandas.DataFrame(data=dictionary)
 noticias.to_csv('tabla_access.csv', index=False, sep=';')
