@@ -36,8 +36,8 @@ for row in csv.iterrows():
             driver.quit()
         driver = webdriver.Firefox()
         driver.get('https://us--mynews--es.us.debiblio.com/hu/')
-        driver.find_element(By.ID, 'edit-name').send_keys('enrpravaz')
-        driver.find_element(By.ID, 'edit-pass').send_keys('ZoiPrada9411' + Keys.ENTER)
+        driver.find_element(By.ID, 'edit-name').send_keys('')
+        driver.find_element(By.ID, 'edit-pass').send_keys('' + Keys.ENTER)
         WebDriverWait(driver, 10).until(
             expected_conditions.url_to_be('https://us--mynews--es.us.debiblio.com/hu/'))
     driver.get('https://us--mynews--es.us.debiblio.com/hu/busqueda/profesional/')
