@@ -1,3 +1,5 @@
+import ast
+import math
 import time
 
 import requests
@@ -11,6 +13,9 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support import expected_conditions
 import pandas
 import os
+import json
+
+from seleniumwire.utils import decode
 
 if not os.path.exists('noticias'):
     os.mkdir('noticias')
@@ -81,15 +86,25 @@ for row in csv.iterrows():
         if 'noticies' in driver.requests[i].url:
             url = driver.requests[i].url
             headers = driver.requests[i].headers
+            bytes_body = decode(driver.requests[i].response.body,
+                                driver.requests[i].response.headers.get('Content-Encoding', 'identity'))
+            body = json.loads(bytes_body.decode('utf-8').replace("'", "\""))
             break
-    url = url.replace('order=data', 'order=coincidencia')
-    url = url.replace('resultsPage=25', 'resultsPage=1000')
-    response = requests.get(url=url, headers=headers).json()
-    url_format = 'https://us--mynews--es.us.debiblio.com/hu/noticies/?idDocument={}&tipus=pdf'
+    noticies_url_format = 'https://us--mynews--es.us.debiblio.com/hu/noticies/page/{}/?hash_keys={}&order=coincidencia&desc=true&rellevancia=60&resultsPage=400&tipusResultats='
+    begin_hash_index = url.find('=') + 1
+    end_hash_index = url.find('&')
+    url_hash = url[begin_hash_index:end_hash_index]
+    total_noticies = body['totalHits']
+    n_busquedas = math.ceil(total_noticies / 400)
+    noticies = []
+    for i in range(1, n_busquedas):
+        response = requests.get(url=noticies_url_format.format(i, url_hash), headers=headers).json()
+        noticies = noticies + response['noticies']
+    pdf_url_format = 'https://us--mynews--es.us.debiblio.com/hu/noticies/?idDocument={}&tipus=pdf'
     path = f'noticias/{row[1]["search_term"]}'
     if not os.path.exists(path):
         os.mkdir(path)
-    for noticie in response['noticies']:
+    for noticie in noticies:
         titular = noticie['Title']
         date = noticie['date']
         medio = noticie['Newspaper']
@@ -112,7 +127,7 @@ for row in csv.iterrows():
             i = 1
             while not response_pdf:
                 print(f'{i}: {id_document}\n')
-                response_pdf = requests.get(url=url_format.format(id_document), headers=headers)
+                response_pdf = requests.get(url=pdf_url_format.format(id_document), headers=headers)
                 i += 1
                 response_pdf.raise_for_status()
         except Exception as e:
