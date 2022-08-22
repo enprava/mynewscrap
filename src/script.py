@@ -1,4 +1,3 @@
-import ast
 import math
 import time
 
@@ -37,13 +36,16 @@ for row in csv.iterrows():
             driver.quit()
         driver = webdriver.Firefox()
         driver.get('https://us--mynews--es.us.debiblio.com/hu/')
-        driver.find_element(By.ID, 'edit-name').send_keys('')
-        driver.find_element(By.ID, 'edit-pass').send_keys('' + Keys.ENTER)
+        driver.find_element(By.ID, 'edit-name').send_keys('enrpravaz')
+        driver.find_element(By.ID, 'edit-pass').send_keys('ZoiPrada9411' + Keys.ENTER)
         WebDriverWait(driver, 10).until(
             expected_conditions.url_to_be('https://us--mynews--es.us.debiblio.com/hu/'))
-
     driver.get('https://us--mynews--es.us.debiblio.com/hu/busqueda/profesional/')
-    driver.find_element(By.ID, 'busqueda_booleana').send_keys(terminos_mapping[row[1]["search_term"]])
+    busqueda = driver.find_element(By.ID, 'busqueda_booleana')
+    for termino in terminos_mapping[row[1]["search_term"]]:
+        busqueda.send_keys(f"\"{termino}\"OR")
+    busqueda.send_keys(Keys.BACKSPACE)
+    busqueda.send_keys(Keys.BACKSPACE)
     driver.find_element(By.ID, 'selectorDatesButton').click()
 
     driver.find_element(By.CLASS_NAME, 'sel_date_2.cell.small-10.no-padding-left.pointer').click()
@@ -88,7 +90,8 @@ for row in csv.iterrows():
             headers = driver.requests[i].headers
             bytes_body = decode(driver.requests[i].response.body,
                                 driver.requests[i].response.headers.get('Content-Encoding', 'identity'))
-            body = json.loads(bytes_body.decode('utf-8').replace("'", "\""))
+            str_body = bytes_body.decode('utf-8').replace("'", "\"")
+            body = json.loads(str_body)
             break
     noticies_url_format = 'https://us--mynews--es.us.debiblio.com/hu/noticies/page/{}/?hash_keys={}&order=coincidencia&desc=true&rellevancia=60&resultsPage=400&tipusResultats='
     begin_hash_index = url.find('=') + 1
