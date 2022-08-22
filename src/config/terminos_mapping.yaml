@@ -1,15 +1,90 @@
-atletismo femenino: "\"atletismo femenino\""
-baloncesto femenino: "\"baloncesto femenino\""
-balonmano femenino: "\"balonmano femenino\""
-ciclismo femenino: "\"ciclismo femenino\""
-escalada mujer: "\"escalada femenina\" OR \"Silvia Vidal\""
-futbol femenino: "\"futbol femenino\""
-golf femenino: "\"golf femenino\""
-hipica mujer: "\"hipica femenina\" OR \"Paola Amilibia\""
-judo femenino: "\"judo femenino\" OR \"María Bernabéu\""
-montaña mujer: "\"montaña mujer\""
-natacion femenina: "\"natacion femenina\" OR \"Mireia Belmonte\""
-padel femenino: "\"padel femenino\""
-tenis femenino: "\"tenis femenino\" OR \"Conchita Martínez\""
-voleibol femenino: "\"voleibol femenino\""
+atletismo femenino:
+  - atletismo femenino
+  - la atleta
+  - las atletas
 
+baloncesto femenino:
+  - baloncesto femenino
+  - jugadora de baloncesto
+  - jugadoras de baloncesto
+  - la basquetbolista
+  - las basquetbolista
+
+balonmano femenino:
+  - balonmano femenino
+  - jugadora de balonmano
+  - las jugadoras de balonmano
+
+ciclismo femenino:
+  - ciclismo femenino
+  - la ciclista
+  - las ciclistas
+
+escalada mujer:
+  - escalada mujer
+  - la escaladora
+  - las escaladoras
+
+futbol femenino:
+  - futbol femenino
+  - jugadora de futbol
+  - jugadoras de futbol
+  - la futbolista
+  - las futbolistas
+
+golf femenino:
+  - golf femenino
+  - la golfista
+  - las
+
+hipica mujer:
+  - hipica mujer
+  - la jockey
+  - la yoqueta
+  - la jinete
+  - las jockeys
+  - las yoquetas
+  - las jinetes
+
+judo femenino:
+  - judo femenino
+  - la judoka
+  - las judokas
+
+natacion femenina:
+  - natacion femenina
+  - la nadadora
+  - las nadadoras
+
+padel femenino:
+  - padel femenino
+  - la jugadora de padel
+  - la padelista
+  - las jugadoras de padel
+  - las padelistas
+
+tenis femenino:
+  - tenis femenino
+  - la tenista
+  - las tenistas
+  - la jugadora de tenis
+  - las jugadoras de tenis
+
+voleibol femenino:
+  - voleibol femenino
+  - la jugadora de voleibol
+  - las jugadoras de voleibol
+  - la voleibolista
+  - las voleibolistas
+
+medallista:
+  - la medallista
+  - las medallistas
+
+mundialista:
+  - la mundialista
+  - las mundialistas
+
+olimpica:
+  - la olímpica
+  - las olímpicas
