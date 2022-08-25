@@ -11,3 +11,43 @@ medios:
   - abc
   - abc.es
   - eldiario.es
+
+usuario: user
+
+contraseña: password
+
+headless: True
+
+fecha_inicio_busqueda: 2011-01-01
+fecha_fin_busqueda: 2021-12-31
+
+periodicidad: 'mensual' # No esta implementada ninguna otra periodicidad.
+amplitud_busqueda: 1 # 12 = 1 año.
+
+filtro_relevancia: 20
+tamaño_pagina: 400
+
+directorio_raiz_noticias_descargadas: '.\noticias'
+
+hilos_descarga: 5
+
+terminos_busqueda:
+  - 'futbol femenino'
+  - 'hipica mujer'
+  - 'atletismo femenino'
+  - 'baloncesto femenino'
+  - 'balonmano femenino'
+  - 'ciclismo femenino'
+  - 'escalada mujer'
+  - 'golf femenino'
+  - 'judo femenino'
+  - 'natacion femenina'
+  - 'padel femenino'
+  - 'tenis femenino'
+  - 'voleibol femenino'
+  - 'medallista'
+  - 'olimpica'
+  - 'mundialista'
+
+directorio_almacen: datos.csv
+directorio_busquedas: busquedas.csv
