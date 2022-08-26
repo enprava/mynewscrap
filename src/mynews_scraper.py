@@ -71,8 +71,8 @@ class MyNewsScrapper:
             options.headless = True
         driver = webdriver.Firefox(options=options, executable_path='geckodriver.exe')
         driver.get('https://us--mynews--es.us.debiblio.com/hu/')
-        driver.find_element(By.ID, 'edit-name').send_keys('marpaldie')
-        driver.find_element(By.ID, 'edit-pass').send_keys('DAsh21012010' + Keys.ENTER)
+        driver.find_element(By.ID, 'edit-name').send_keys(self.config['usuario'])
+        driver.find_element(By.ID, 'edit-pass').send_keys(self.config['contraseña'] + Keys.ENTER)
         WebDriverWait(driver, 30).until(
             expected_conditions.url_to_be('https://us--mynews--es.us.debiblio.com/hu/'))
 
@@ -319,12 +319,20 @@ class MyNewsScrapper:
                 fichero = open(directorio_fichero, 'wb')
                 fichero.write(response_pdf.content)
                 fichero.close()
-                tamaño_fichero = len(response_pdf.content)
-                self.almacen[self.almacen['id' == id]]['status'] = 'Extraido'
-                self.almacen[self.almacen['id' == id]]['tamaño_bytes'] = tamaño_fichero
-                self.almacen[self.almacen['id' == id]]['enlace_local'] = directorio_fichero
+                # tamaño_fichero = len(response_pdf.content)
+                # df = self.almacen
+                # df.loc[df['id'] == id,'status'] = 0
+                # print(df)
+                # print(self.almacen.loc[self.almacen['id' == id], 'status'])
+                # self.almacen.loc[self.almacen.loc['id' == id]]['status'] = 'Extraido'
+                # self.almacen.loc[self.almacen.loc['id' == id]]['tamaño_bytes'] = tamaño_fichero
+                # self.almacen.loc[self.almacen.loc['id' == id]]['enlace_local'] = directorio_fichero
+
+                self.guardar_almacen()
             except Exception as e:
-                self.logger.warning('Error al guardar el fichero: %s', id)
+                self.logger.warning('Error al guardar el fichero: %s - %s', id,e)
+                print(self.almacen.loc[self.almacen['id' == id], 'status'])
+                raise e
 
     def guardar_almacen(self):
         self.almacen.to_csv(self.config['directorio_almacen'], index=False)

@@ -8,8 +8,8 @@ if __name__ == '__main__':
 
     scraper = MyNewsScrapper(config,medios_mapping,terminos_mapping)
     driver = scraper.entrar_mynews()
-    # scraper.comenzar_extraccion()
-    scraper.descargar_noticias()
+    scraper.comenzar_extraccion()
+    # scraper.descargar_noticias()
     # scraper.guardar_almacen()
 
     # taskkill /IM firefox.exe /F
