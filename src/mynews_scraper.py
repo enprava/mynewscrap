@@ -69,7 +69,7 @@ class MyNewsScrapper:
         options = Options()
         if self.config['headless']:
             options.headless = True
-        driver = webdriver.Firefox(options=options, executable_path='geckodriver.exe')
+        driver = webdriver.Firefox(options=options, executable_path='geckodriver')
         driver.get('https://us--mynews--es.us.debiblio.com/hu/')
         driver.find_element(By.ID, 'edit-name').send_keys(self.config['usuario'])
         driver.find_element(By.ID, 'edit-pass').send_keys(self.config['contraseña'] + Keys.ENTER)

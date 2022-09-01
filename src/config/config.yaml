@@ -12,9 +12,9 @@ medios:
   - abc.es
   - eldiario.es
 
-usuario: user
+usuario: enrpravaz
 
-contraseña: password
+contraseña: ZoiPrada9411
 
 headless: True
 
@@ -39,15 +39,20 @@ terminos_busqueda:
 #  - 'balonmano femenino'
 #  - 'ciclismo femenino'
 #  - 'escalada mujer'
-  - 'golf femenino'
-  - 'judo femenino'
-  - 'natacion femenina'
-  - 'padel femenino'
-  - 'tenis femenino'
-  - 'voleibol femenino'
-  - 'medallista'
-  - 'olimpica'
-  - 'mundialista'
+#  - 'golf femenino'
+#  - 'judo femenino'
+  - 'surf femenino'
+  - 'gimnasia femenina'
+  - 'patinaje femenino'
+  - 'karate femenino'
+  - 'taekwondo femenino'
+#  - 'natacion femenina'
+#  - 'padel femenino'
+#  - 'tenis femenino'
+#  - 'voleibol femenino'
+#  - 'medallista'
+#  - 'olimpica'
+#  - 'mundialista'
 
 directorio_almacen: datos.csv
 directorio_busquedas: busquedas.csv
